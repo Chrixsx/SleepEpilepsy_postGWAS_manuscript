@@ -88,7 +88,6 @@ ld.matrix <- ieugwasr::ld_matrix(
 # (3) Checking LD matrix
 # Not all SNPs are captured in LD matrix
 snp_in_LD.matrix <- colnames(ld.matrix)
-share_snps=intersect(snp_in_LD.matrix, re_shared_snps)
 non_shared_snps <- setdiff(re_shared_snps, snp_in_LD.matrix)
 
 # Filter SNP again
