@@ -5,6 +5,7 @@ library(ggraph)
 library(igraph)
 library(scales)
 
+# Import bivariate LAVA correlation results
 lava_bivar <- vroom::vroom("LAVA_bivariates") %>% 
   mutate(
     pair = paste0(`Trait 1`, "-", `Trait 2`)) %>% 
@@ -13,7 +14,7 @@ lava_bivar <- vroom::vroom("LAVA_bivariates") %>%
     shared_loci = list(Cytogenic_band),
     weight = n())
 
-
+# Create connection between significant sleep-epilepsy pair, and count number of correlation
 edges_df <- lava_bivar %>%
   mutate(
     loci_label = map_chr(shared_loci, ~ paste(.x, collapse = ", "))
@@ -50,9 +51,10 @@ layout_vertical <- data.frame(
   x = lay[,2] * 0.3,  # Reduce horizontal spread
   y = lay[,1] * 0.2)
 
-
+# Raw plot
 p1 <- ggraph(g1, layout = layout_vertical)
 
+# Adjusting edge (weight) size and color
 p2 <- p1 +
   geom_edge_link(
     aes(width = weight),
@@ -64,6 +66,8 @@ p2 <- p1 +
     name   = "Number of significantly correlated loci",
     labels = scales::label_number(accuracy = 1))
 
+
+# Define data shape of epilepsy types and color for sleep-related traits
 p3 <- p2 +
   geom_node_point(aes(color = ifelse(group == "Sleep-related traits", name, "black"), 
                       shape = ifelse(group == "Epilepsy phenotypes", name, 19)), 
@@ -84,7 +88,7 @@ p3 <- p2 +
   theme_graph()
 
 
-
+# Making figure legend box
 p4 <-  p3 +
   coord_cartesian(clip = "off") +  # Prevents ggplot clipping
   theme_graph() +
@@ -99,8 +103,7 @@ p4 <-  p3 +
     plot.margin = margin(t = 3,  b = 0.5, r = 19.5, l = 14.5, unit = "cm"))
 
 
-
-# Annotate Manually
+# Annotate each data point
 text_size = 27
 x_gap = 0.103
 
