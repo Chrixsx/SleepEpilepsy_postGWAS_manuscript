@@ -1,4 +1,4 @@
-This section includes script to do 2 tasks:
+This section includes scripts to do 2 tasks:
 Task 1: Run LDSC
 Task 2: Create correlation plot (Figure 2) for publication
 
