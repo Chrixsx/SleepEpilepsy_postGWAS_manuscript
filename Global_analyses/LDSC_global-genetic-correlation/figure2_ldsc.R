@@ -1,3 +1,31 @@
+# Step 1: Prepare sleep-epilepsy correlation matrix for plotting
+corr.raw <- read_table("path_to_correlation_matrix")
+
+# Row names
+row_names <- c("GGE", "Focal epilepsy")
+row_names <- gsub("\\n", " ", row_names)
+
+# Column names
+col_names <- c("Morningness", "Sleep duration", "Long sleep", "Short sleep", 
+               "Daytime napping", "Daytime sleepiness", "Insomnia")
+
+
+# Format correlation matrix for ggplot
+if (length(row_names) == nrow(corr.raw)) {
+  corr.df <- as.data.frame(corr.raw)
+  rownames(corr.df) <- row_names
+  colnames(corr.df) <- col_names
+  corr.matrix <- as.matrix(corr.df)
+} else {
+  stop("The number of names does not match the number of rows in the data table")
+}
+corr.matrix <- corr.matrix %>% t()
+corr.matrix
+
+
+
+
+# Step 2: Making correlogram from correlation matrix
 library(ggplot2)
 
 fig2_ldsc <- ggcorrplot(
