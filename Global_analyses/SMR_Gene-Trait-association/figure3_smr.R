@@ -17,8 +17,8 @@ signif_smr_epilepsy <- smr_res %>%
   filter(Trait %in% c("GGE", "Focal Epilepsy")) %>% 
   filter(p_SMR <= 0.05/10534)
 
-# 2/ Import gene-trait association SMR results (Supplementary Table 8)
-gene4epi <- vroom::vroom("EpilepsyGenes_March2026.tsv")
+# 2/ Import Genes4Epilepsy (March 2026 version. Source https://bahlolab.github.io/Genes4Epilepsy/)
+gene4epi <- vroom::vroom("Genes4Epilepsy_March2026.tsv")
 
 
 # 3/ Import known clock genes
